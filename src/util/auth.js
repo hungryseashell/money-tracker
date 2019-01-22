@@ -53,11 +53,14 @@ function parseHash() {
 }
 
 function getUserInfo(accessToken) {
+  const namespace = process.env.REACT_APP_NAMESPACE;
   return new Promise((resolve, reject) => {
-    auth0.client.userInfo(accessToken, (error, userInfo) => {
-      if (error) return reject(error);
-
-      resolve({ accessToken, couchDB: userInfo.couchDB });
+        auth0.client.userInfo(accessToken, (error, user) => {
+              if (error) return reject(error);
+              resolve({
+                accessToken,
+                couchDB: user[namespace + 'couchDB']
+              });
     });
   });
 }

@@ -1,13 +1,13 @@
-export default CouchDbProvision;
-
 function CouchDbProvision(user, context, callback) {
   const request = require('request');
   const uuidv4 = require('uuid').v4;
   const databases = ['accounts', 'transactions', 'tags', 'settings'];
   var cookie;
+  const namespace = 'https://namespace.to.be.put.here/';
 
   user.app_metadata = user.app_metadata || {};
   user.app_metadata.couchDB = user.app_metadata.couchDB || {};
+  context.idToken[namespace + 'couchDB'] = user.app_metadata.couchDB;
 
   loginAsAdmin()
     .then(provisionUser)
