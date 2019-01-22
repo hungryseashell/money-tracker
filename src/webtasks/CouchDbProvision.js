@@ -1,9 +1,11 @@
+export default CouchDbProvision;
+
 function CouchDbProvision(user, context, callback) {
   const request = require('request');
   const uuidv4 = require('uuid').v4;
   const databases = ['accounts', 'transactions', 'tags', 'settings'];
   var cookie;
-  const namespace = 'https://namespace.to.be.put.here/';
+  const namespace = 'https://namespace-here/';
 
   user.app_metadata = user.app_metadata || {};
   user.app_metadata.couchDB = user.app_metadata.couchDB || {};
@@ -113,8 +115,6 @@ function CouchDbProvision(user, context, callback) {
   }
 
   function databaseUri(name) {
-    return `${configuration['CouchHost']}/${name}_${
-      user.app_metadata.couchDB.username
-    }`;
+    return `${configuration['CouchHost']}/${name}_${user.app_metadata.couchDB.username}`;
   }
 }
