@@ -1,9 +1,10 @@
-import subDays from 'date-fns/sub_days';
-import startOfToday from 'date-fns/start_of_today';
-import endOfToday from 'date-fns/end_of_today';
+import subDays          from 'date-fns/sub_days';
+import startOfToday     from 'date-fns/start_of_today';
+import endOfToday       from 'date-fns/end_of_today';
 import startOfYesterday from 'date-fns/start_of_yesterday';
-import endOfYesterday from 'date-fns/end_of_yesterday';
-import startOfMonth from 'date-fns/start_of_month';
+import endOfYesterday   from 'date-fns/end_of_yesterday';
+import startOfMonth     from 'date-fns/start_of_month';
+import startOfYear      from 'date-fns/start_of_year';
 
 export enum DateFilterRangeT {
   today,
@@ -11,6 +12,7 @@ export enum DateFilterRangeT {
   lastWeek,
   lastMonth,
   thisMonth,
+  thisYear,
   custom
 }
 
@@ -28,6 +30,12 @@ function firstDayOfThisMonth() {
   const date = new Date();
 
   return startOfMonth(date);
+}
+
+function firstDayOfThisYear() {
+  const date = new Date();
+
+  return startOfYear(date);
 }
 
 const lastWeek = daysFromToday(7);
@@ -59,6 +67,11 @@ const DateFilterRangeMap: { [range in DateFilterRangeT]: DateFilterItemT } = {
     start: firstDayOfThisMonth,
     end: endOfToday
   },
+  [DateFilterRangeT.thisYear]: {
+    text: 'This year',
+    start: firstDayOfThisYear,
+    end: endOfToday
+  },
   [DateFilterRangeT.custom]: {
     text: 'Custom date',
     start: startOfToday,
@@ -66,7 +79,7 @@ const DateFilterRangeMap: { [range in DateFilterRangeT]: DateFilterItemT } = {
   }
 };
 
-export const defaultDateFilterRange = DateFilterRangeT.lastWeek;
+export const defaultDateFilterRange = DateFilterRangeT.thisYear;
 export const defaultStart = DateFilterRangeMap[defaultDateFilterRange].start;
 export const defaultEnd = DateFilterRangeMap[defaultDateFilterRange].end;
 
